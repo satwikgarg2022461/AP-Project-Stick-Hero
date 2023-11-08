@@ -1,0 +1,15 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root
+{
+	-fx-background-image: url('images/BG1.jpg');
+	-fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: repeat;/* Or set the size as needed */
+}
+
+#PlayButton{
+	-fx-background-color: FA7070;
+	-fx-background-radius: 40; 
+	-fx-min-width: 70px; 
+	-fx-min-height: 70px;
+}

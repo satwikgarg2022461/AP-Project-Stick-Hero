@@ -1,0 +1,49 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>StickHero</groupId>
+  <artifactId>StickHero</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <dependencies>
+    <!-- JavaFX Dependency -->
+    <dependency>
+       <groupId>org.openjfx</groupId>
+       <artifactId>javafx-controls</artifactId>
+       <version>21</version>
+    </dependency>
+    <!-- Other dependencies can be added here if needed -->
+  </dependencies>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <release>19</release>
+        </configuration>
+      </plugin>
+      <!-- Plugin for creating an executable JAR -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>StickHero.src.application.Main</mainClass> <!-- Replace this with your main class -->
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <!-- Other plugins can be included here if needed -->
+    </plugins>
+  </build>
+</project>
