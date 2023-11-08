@@ -1,0 +1,22 @@
+.root
+{
+	-fx-background-image: url('images/BG1.jpeg');
+	-fx-background-size: contain;
+    -fx-background-position: center;
+    -fx-background-repeat: repeat;/* Or set the size as needed */
+}
+
+#playbutton
+{
+	-fx-background-color: #FA7070; /* Background color of the button */
+    -fx-background-radius: 70; /* Half of the button's height to make it pill-shaped */
+    -fx-border-radius: 70;
+
+}
+
+#loadbutton
+{
+	-fx-background-color: #FA7070; /* Background color of the button */
+    -fx-background-radius: 70; /* Half of the button's height to make it pill-shaped */
+    -fx-border-radius: 70;
+}

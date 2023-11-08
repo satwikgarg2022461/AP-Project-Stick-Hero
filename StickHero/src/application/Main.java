@@ -1,25 +1,35 @@
 package application;
 	
+import javafx.scene.image.Image;
+import java.io.IOException;
+
 import javafx.application.Application;
-import javafx.stage.Stage;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
-import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
 
 
 public class Main extends Application {
+	
 	@Override
-	public void start(Stage primaryStage) {
-		try {
-			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
-			Scene scene = new Scene(root, 598, 345 );
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	public void start(Stage primaryStage)throws IOException {
+		
+			AnchorPane root = (AnchorPane)FXMLLoader.load(getClass().getResource("main_screen.fxml"));
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add(getClass().getResource("main_screen_css.css").toExternalForm());
 			primaryStage.setScene(scene);
+			Main_screen_controller sampleController = new Main_screen_controller();
+			sampleController.initialize(null, null);
+			primaryStage.setTitle("Stick Heros");
+			Image icon = new Image("file:images/icon.png");
+			primaryStage.getIcons().add(icon);
+			
 			primaryStage.setResizable(false);
 			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+			
+			
+		
 	}
 	
 	public static void main(String[] args) {
