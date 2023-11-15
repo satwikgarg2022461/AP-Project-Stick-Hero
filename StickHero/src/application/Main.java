@@ -22,7 +22,7 @@ public class Main extends Application {
 			Main_screen_controller sampleController = new Main_screen_controller();
 			sampleController.initialize(null, null);
 			primaryStage.setTitle("Stick Heros");
-			Image icon = new Image("file:images/icon.png");
+			Image icon = new Image("file:///AP_assignment\\src\\application\\images\\icon.png");
 			primaryStage.getIcons().add(icon);
 			
 			primaryStage.setResizable(false);
