@@ -1,6 +1,8 @@
 package com.example.stickhero;
 
 import javafx.scene.paint.Color;
+import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
 
 public class Graphics {
@@ -12,9 +14,13 @@ public class Graphics {
 		return rectangle;
 	}
 	
-	public Rectangle createStick()
+	public Box createStick()
 	{
-		Rectangle stick = new Rectangle(10,10,Color.BLACK);
+		Box stick = new Box(10,10,10);
+		PhongMaterial material = new PhongMaterial();
+		Color customColor = Color.valueOf("#795234");
+		material.setDiffuseColor(Color.BLACK);
+		stick.setMaterial(material);
 		return stick;
 	}
 
