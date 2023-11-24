@@ -3,6 +3,7 @@ package com.example.stickhero;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.animation.*;
@@ -25,7 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.shape.Box;
 
-public class Playable_Screen_Controller implements Initializable {
+public class Playable_Screen_Controller {
 
     @FXML
     private Button pause;
@@ -65,44 +66,40 @@ public class Playable_Screen_Controller implements Initializable {
         return root;
     }
 
-    @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
 
 
+    boolean isstickrotate = true;
+
+    public void switchToPause(ActionEvent event) throws IOException {
+        root_pause = FXMLLoader.load(getClass().getResource("exit_screen.fxml"));
+        stage_pause = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene_pause = new Scene(root_pause);
+        stage_pause.setScene(scene_pause);
+        stage_pause.show();
     }
-
-    double stickInitialY = 480;
-    double upwardDistance = 10;
-
-
-
-    private void elongateStickWithAnimation() {
-        if (stick.getHeight() + upwardDistance <= 557) { // Check if the stick height doesn't exceed the limit
-            double currentTranslateY = stick.getTranslateY();
-
-            // Increasing the scale of the rectangle in the Y-axis
-            stick.getTransforms().add(new Scale(1, 1.1, 1, stick.getTranslateX(), stick.getBoundsInLocal().getMaxY(), stick.getTranslateZ()));
-
-            // Compensating for the translation to keep the base stationary
-            stick.setTranslateY(currentTranslateY);
-        }
-    }
-
 
     public void generate_scene(ActionEvent event) throws IOException {
+
+        int hero_counter = 0;
+        GlobalData.totalRectangleLength = 0;
+        GlobalData.totalSpaceLength = 0;
+        GlobalData.rectangleArrayList = new ArrayList<>();
+        GlobalData.spacingArrayList = new ArrayList<>();
+
         Graphics graphics = new Graphics();
         Random_generator random_generator = new Random_generator();
+        Animation animation = new Animation();
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("playable_screen.fxml"));
         root = loader.load();
         scene = new Scene(root);
 
-        int rectangleCount = 2; // Number of rectangles to be added
-        double startX = 0; // Initial x position of the first rectangle
-        double startY = 488; // Initial y position of the first rectangle
+//        --- initialising X and Y coordinate of rectangle and hero
+        double startY = 488;
         double heroStartX = 0;
         double heroStartY = 387;
+//        ----  image of the hero
         Image image = new Image(getClass().getResourceAsStream("images/hero11.png"));
         ImageView imageview = new ImageView(image);
         imageview.setFitWidth(100);
@@ -110,45 +107,74 @@ public class Playable_Screen_Controller implements Initializable {
         imageview.setX(heroStartX);
         imageview.setY(heroStartY);
         root.getChildren().add(imageview);
+//        ---- stick creation
         stick = graphics.createStick();
-
-
-        Color customColor = Color.valueOf("#795234");
-
-
-        for (int i = 0; i < rectangleCount; i++) {
-            double rectangleWidth = random_generator.getRandomWidth(); // Width of each rectangle
-            double rectangleHeight = 70; // Height of each rectangle
-            double spacing = random_generator.getRandomSpacing();
-            Rectangle box = graphics.createRectangle(rectangleWidth, rectangleHeight, customColor);
-            box.setLayoutX(startX + (rectangleWidth + spacing) * i);
-            box.setLayoutY(startY);
-            root.getChildren().add(box);
-        }
         stick.setTranslateX(90);
         stick.setTranslateY(480);
         stick.setTranslateZ(10);
-
-        double currentHeight = stick.getHeight();
-
-        stick.setRotationAxis(Rotate.X_AXIS);
-        stick.setRotate(0);
-
         root.getChildren().add(stick);
+        Color customColor = Color.valueOf("#795234");
 
+
+        //      ---- producing rectangle
+        int counter = 0;
+        while (GlobalData.totalRectangleLength + GlobalData.totalSpaceLength < 350){
+//            System.out.println(counter+"  "+(GlobalData.totalRectangleLength+GlobalData.totalSpaceLength));
+            if(counter == 0)
+            {
+                Rectangle firstBox = graphics.createRectangle(87, 70,customColor);
+                firstBox.setLayoutX(0);
+                firstBox.setLayoutY(startY);
+                root.getChildren().add(firstBox);
+                GlobalData.rectangleArrayList.add(firstBox);
+                GlobalData.totalRectangleLength += firstBox.getWidth();
+            }
+            else
+            {
+                double rectangleWidth = random_generator.getRandomWidth();
+                double rectangleHeight = 70;
+                double spacing = random_generator.getRandomSpacing();
+//                System.out.println(counter);
+//                System.out.println("width "+rectangleWidth);
+//                System.out.println("spacing "+spacing);
+                GlobalData.spacingArrayList.add(spacing);
+                Rectangle box = graphics.createRectangle(rectangleWidth, rectangleHeight, customColor);
+                GlobalData.totalSpaceLength += spacing;
+                for (Rectangle rectangle : GlobalData.rectangleArrayList)
+                {
+//                    System.out.println("total rectangle length "+GlobalData.totalRectangleLength);
+//                    System.out.println("total spacing "+GlobalData.totalSpaceLength);
+//                    System.out.println("rectangle length "+box.getWidth());
+                    GlobalData.totalRectangleLength += box.getWidth();
+                }
+//                System.out.println("after total rectangle length "+GlobalData.totalRectangleLength);
+//                System.out.println("after total spacing "+GlobalData.totalSpaceLength);
+
+
+                box.setLayoutX(GlobalData.totalRectangleLength + GlobalData.totalSpaceLength);
+                box.setLayoutY(startY);
+                root.getChildren().add(box);
+                GlobalData.rectangleArrayList.add(box);
+            }
+            counter++;
+        }
+
+//        elonating stick by pressing space key
         scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.SPACE) {
-
-                elongateStickWithAnimation();
-
+            if (keyEvent.getCode() == KeyCode.SPACE && isstickrotate) {
+                animation.elongateStickWithAnimation(stick);
                 keyEvent.consume();
             }
         });
 
+//          rotating stick by pressing X
         scene.addEventFilter(KeyEvent.KEY_PRESSED, dropStick -> {
             if (dropStick.getCode() == KeyCode.X) {
-
-                createDropAnimation();
+                animation.createDropAnimation(stick);
+                isstickrotate = false;
+                dropStick.consume();
+                animation.moveCharacter(imageview, hero_counter, heroStartX, stick);
+//                hero_counter++;
             }
         });
 
@@ -156,25 +182,4 @@ public class Playable_Screen_Controller implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-
-    private void  createDropAnimation() {
-
-        // Set up a rotation animation (90 degrees in z-axis)
-        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(1.5), stick);
-        rotateTransition.setAxis(Rotate.Z_AXIS);
-        rotateTransition.setByAngle(90);
-        rotateTransition.setCycleCount(1);
-        rotateTransition.play();
-    }
-
-    public void switchToPause(ActionEvent event) throws IOException {
-        root_pause = FXMLLoader.load(getClass().getResource("exit_screen.fxml"));
-        stage_pause = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene_pause = new Scene(root_pause);
-
-        stage_pause.setScene(scene_pause);
-        stage_pause.show();
-    }
-
-
 }

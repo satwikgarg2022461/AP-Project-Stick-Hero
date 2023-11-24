@@ -8,12 +8,12 @@ public class Random_generator {
 	
 	public double getRandomWidth() {
         // Adjust the range of width values as needed
-        return random.nextDouble() * 50 + 50; // Random width between 50 and 200
+        return random.nextDouble() * 50 + 25; // Random width between 50 and 200
     }
 	
 	public double getRandomSpacing() {
         // Adjust the range of spacing values as needed
-        return random.nextDouble() * 50 + 10; // Random spacing between 10 and 60
+        return random.nextDouble() * 20 + 10; // Random spacing between 10 and 60
     }
 
 }

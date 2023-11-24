@@ -16,7 +16,7 @@ public class Graphics {
 	
 	public Box createStick()
 	{
-		Box stick = new Box(10,10,10);
+		Box stick = new Box(5,10,10);
 		PhongMaterial material = new PhongMaterial();
 		Color customColor = Color.valueOf("#795234");
 		material.setDiffuseColor(Color.BLACK);
