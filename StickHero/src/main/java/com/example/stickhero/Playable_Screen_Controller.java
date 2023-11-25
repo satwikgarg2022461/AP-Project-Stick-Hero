@@ -179,16 +179,21 @@ public class Playable_Screen_Controller {
                 double xdisplacement = newfirstbox.getLayoutX()-firstbox.getLayoutX();
                 System.out.println(xdisplacement);
                     // Move the rectangle from right to left
-                for (Rectangle box:
-                     GlobalData.rectangleArrayList) {
-                    double newX = box.getLayoutX()-xdisplacement;
-                    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), box);
-                    translateTransition.setByX(-xdisplacement);
-                    System.out.println(box.getLayoutX() - xdisplacement);
-                    System.out.println("hi");
-                    translateTransition.play();
+                Timeline timeline = new Timeline();
+                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), e ->{
+                    for (Rectangle box:
+                            GlobalData.rectangleArrayList) {
+                        double newX = box.getLayoutX()-xdisplacement;
+                        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), box);
+                        translateTransition.setByX(-xdisplacement);
+                        System.out.println(box.getLayoutX() - xdisplacement);
+                        System.out.println("hi");
+                        translateTransition.play();
 
-                }
+                    }
+                }));
+                timeline.play();
+
 
 //                hero_counter++;
             }
