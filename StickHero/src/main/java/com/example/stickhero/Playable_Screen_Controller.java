@@ -174,25 +174,7 @@ public class Playable_Screen_Controller {
                 isstickrotate = false;
                 dropStick.consume();
                 animation.moveCharacter(imageview, hero_counter, heroStartX, stick);
-                Rectangle firstbox = GlobalData.rectangleArrayList.get(0);
-                Rectangle newfirstbox = GlobalData.rectangleArrayList.get(1);
-                double xdisplacement = newfirstbox.getLayoutX()-firstbox.getLayoutX();
-                System.out.println(xdisplacement);
-                    // Move the rectangle from right to left
-                Timeline timeline = new Timeline();
-                timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(2), e ->{
-                    for (Rectangle box:
-                            GlobalData.rectangleArrayList) {
-                        double newX = box.getLayoutX()-xdisplacement;
-                        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), box);
-                        translateTransition.setByX(-xdisplacement);
-                        System.out.println(box.getLayoutX() - xdisplacement);
-                        System.out.println("hi");
-                        translateTransition.play();
-
-                    }
-                }));
-                timeline.play();
+                animation.moveBackBlocksAndCharacter(imageview, hero_counter, heroStartX);
 
 
 //                hero_counter++;
