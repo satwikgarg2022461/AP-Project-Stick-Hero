@@ -52,7 +52,7 @@ public class Playable_Screen_Controller {
     }
 
     //
-//    
+//
 //    // Getter methods
     public Stage getStage() {
         return stage;
@@ -110,7 +110,7 @@ public class Playable_Screen_Controller {
 //        ---- stick creation
         stick = graphics.createStick();
         stick.setTranslateX(90);
-        stick.setTranslateY(480);
+        stick.setTranslateY(490);
         stick.setTranslateZ(10);
         root.getChildren().add(stick);
         Color customColor = Color.valueOf("#795234");
@@ -174,6 +174,22 @@ public class Playable_Screen_Controller {
                 isstickrotate = false;
                 dropStick.consume();
                 animation.moveCharacter(imageview, hero_counter, heroStartX, stick);
+                Rectangle firstbox = GlobalData.rectangleArrayList.get(0);
+                Rectangle newfirstbox = GlobalData.rectangleArrayList.get(1);
+                double xdisplacement = newfirstbox.getLayoutX()-firstbox.getLayoutX();
+                System.out.println(xdisplacement);
+                    // Move the rectangle from right to left
+                for (Rectangle box:
+                     GlobalData.rectangleArrayList) {
+                    double newX = box.getLayoutX()-xdisplacement;
+                    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), box);
+                    translateTransition.setByX(-xdisplacement);
+                    System.out.println(box.getLayoutX() - xdisplacement);
+                    System.out.println("hi");
+                    translateTransition.play();
+
+                }
+
 //                hero_counter++;
             }
         });
