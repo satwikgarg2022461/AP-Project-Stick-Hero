@@ -1,6 +1,8 @@
 package com.example.stickhero;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.RotateTransition;
+import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Box;
@@ -41,11 +43,43 @@ public class Animation {
         if(spacing <= stickLength && stickLength <= rectangleLenght+spacing)
         {
             System.out.println("hi");
-            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), hero);
-            translateTransition.setToX(stickLength+100);
-            translateTransition.play();
+            Timeline timeline = new Timeline();
+            timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1),e ->{
+                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), hero);
+                translateTransition.setToX(stickLength+100);
+                translateTransition.play();
+            }));
+            timeline.play();
+//            TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), hero);
+//            translateTransition.setToX(stickLength+100);
+//            translateTransition.play();
             return true;
         }
         return false;
+    }
+
+    public void moveBackBlocksAndCharacter(ImageView hero, int hero_counter, double heroStartX){
+        Rectangle firstbox = GlobalData.rectangleArrayList.get(0);
+        Rectangle newfirstbox = GlobalData.rectangleArrayList.get(1);
+        double xdisplacement = newfirstbox.getLayoutX()-firstbox.getLayoutX();
+        System.out.println(xdisplacement);
+        // Move the rectangle from right to left
+        Timeline timeline = new Timeline();
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(3), e ->{
+            for (Rectangle box:
+                    GlobalData.rectangleArrayList) {
+                double newX = box.getLayoutX()-xdisplacement;
+                TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), box);
+                translateTransition.setByX(-xdisplacement);
+                System.out.println(box.getLayoutX() - xdisplacement);
+                System.out.println("hi");
+                translateTransition.play();
+                TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(2), hero);
+                translateTransition1.setByX(-xdisplacement);
+                translateTransition1.play();
+
+            }
+        }));
+        timeline.play();
     }
 }
