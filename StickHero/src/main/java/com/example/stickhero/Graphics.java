@@ -7,9 +7,9 @@ import javafx.scene.shape.Rectangle;
 
 public class Graphics {
 
-	public Rectangle createRectangle(double width, double height, Color color)
+	public Rectangle createRectangle(double x, double y,double width, double height, Color color)
 	{
-		Rectangle rectangle = new Rectangle(width, height);
+		Rectangle rectangle = new Rectangle(x,y,width, height);
 		rectangle.setFill(color);
 		return rectangle;
 	}
