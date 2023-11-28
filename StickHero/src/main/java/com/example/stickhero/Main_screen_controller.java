@@ -35,6 +35,8 @@ public class Main_screen_controller implements Initializable {
     }
 
     public void switchToPlayScreen(ActionEvent event) throws IOException {
+        Sound sound = new Sound();
+        sound.buttonSound();
         root = FXMLLoader.load(getClass().getResource("gameLoad.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

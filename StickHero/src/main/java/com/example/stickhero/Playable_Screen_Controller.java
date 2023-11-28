@@ -27,10 +27,10 @@ import javafx.util.Duration;
 import javafx.scene.shape.Box;
 
 public class Playable_Screen_Controller {
-//    int counter = 0;
+    //    int counter = 0;
     Graphics graphics = new Graphics();
     Random_generator random_generator = new Random_generator();
-//    Animation animation = new Animation();
+    //    Animation animation = new Animation();
     KeyEventHandler keyEventHandler = new KeyEventHandler();
     double startY = 488;
     Color customColor = Color.valueOf("#795234");
@@ -43,7 +43,7 @@ public class Playable_Screen_Controller {
     private Scene scene, scene_pause;
     private Group root;
     private Parent root_pause;
-//    private Box stick;
+    //    private Box stick;
     private Scale scale;
 
     //
@@ -79,6 +79,8 @@ public class Playable_Screen_Controller {
 
 
     public void switchToPause(ActionEvent event) throws IOException {
+        Sound sound = new Sound();
+        sound.buttonSound();
         root_pause = FXMLLoader.load(getClass().getResource("exit_screen.fxml"));
         stage_pause = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene_pause = new Scene(root_pause);

@@ -71,6 +71,8 @@ public class Animation {
                 System.out.println("Meow 4");
                 translateTransition.setOnFinished(eventhhjhjj ->
                 {
+                    Sound sound = new Sound();
+                    sound.scoreSound();
                     System.out.println("meow5");
                     stickHeight = 9.6;
                     GlobalData.isstickrotate=true;
@@ -84,6 +86,7 @@ public class Animation {
             timeline.play();
 
         }
+
 
     }
 

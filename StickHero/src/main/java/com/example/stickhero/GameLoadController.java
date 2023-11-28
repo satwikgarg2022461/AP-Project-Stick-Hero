@@ -11,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -52,6 +54,8 @@ public class GameLoadController {
     
 
     public void switchToPlayScreen(ActionEvent event) throws IOException {
+        Sound sound = new Sound();
+        sound.buttonSound();
     	Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
     	playable_Screen_Controller.generate_scene(event);
 //        FXMLLoader loader = new FXMLLoader(getClass().getResource("playable_screen.fxml"));

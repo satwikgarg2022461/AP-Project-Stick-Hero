@@ -22,6 +22,8 @@ public class Exit_screen_controller {
 
     public void switchToHome(ActionEvent event) throws IOException
     {
+        Sound sound = new Sound();
+        sound.buttonSound();
         root_home = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
         stage_home = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene_home = new Scene(root_home);
@@ -31,6 +33,8 @@ public class Exit_screen_controller {
     }
     public void switchToPlayable(ActionEvent event) throws IOException
     {
+        Sound sound = new Sound();
+        sound.buttonSound();
         Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
         playable_Screen_Controller.generate_scene(event);
     }
