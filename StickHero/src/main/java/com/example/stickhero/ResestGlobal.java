@@ -3,8 +3,10 @@ package com.example.stickhero;
 import java.util.ArrayList;
 
 public class ResestGlobal {
+
     public void reset()
     {
+        Animation animation = new Animation();
         GlobalData.totalRectangleLength = 0;
         GlobalData.totalSpaceLength = 0;
         GlobalData.rectangleArrayList = new ArrayList<>();
@@ -15,5 +17,8 @@ public class ResestGlobal {
         GlobalData.transitionX=0;
         GlobalData.isstickrotate=true;
         GlobalData.isMoveCharcter=true;
+//        animation.setStickHeight(9.6);
+        GlobalData.stickHeight = 9.6;
     }
+
 }

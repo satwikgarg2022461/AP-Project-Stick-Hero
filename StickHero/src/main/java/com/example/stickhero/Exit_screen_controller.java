@@ -41,7 +41,6 @@ public class Exit_screen_controller {
         resestGlobal.reset();
         Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
         playable_Screen_Controller.generate_scene(event);
-
     }
 
 

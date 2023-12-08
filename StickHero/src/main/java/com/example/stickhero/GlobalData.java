@@ -24,5 +24,6 @@ public class GlobalData {
 
     public static boolean isstickrotate = true;
     public static boolean isMoveCharcter = true;
+    public static double stickHeight = 9.6;
 
 }

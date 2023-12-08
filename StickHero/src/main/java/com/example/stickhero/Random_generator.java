@@ -24,4 +24,18 @@ public class Random_generator {
         return random.nextDouble() * 100 + 50;
     }
 
+    public double generateRandomDouble(double minValue, double maxValue) {
+        if (minValue >= maxValue) {
+            throw new IllegalArgumentException("minValue must be less than maxValue");
+        }
+
+        Random random = new Random();
+        return minValue + (random.nextDouble() * (maxValue - minValue));
+    }
+
+    public int randomInt()
+    {
+        return random.nextInt(10);
+    }
+
 }

@@ -2,36 +2,24 @@ package com.example.stickhero;
 
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.ResourceBundle;
-
-import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-import javafx.scene.shape.Box;
 
 public class Playable_Screen_Controller  {
 
-    //    int counter = 0;
+
     Graphics graphics = new Graphics();
+    Cherry cherry = new Cherry();
     Random_generator random_generator = new Random_generator();
     //    Animation animation = new Animation();
     KeyEventHandler keyEventHandler = new KeyEventHandler();
@@ -42,14 +30,13 @@ public class Playable_Screen_Controller  {
     @FXML
     private Button pause;
 
-    private Stage stage, stage_pause;
-    private Scene scene, scene_pause;
+    private Stage stage;
+    private Scene scene;
     private Group root;
-    private Parent root_pause;
-    //    private Box stick;
+
     private Scale scale;
 
-    //
+
     public void setStage(Stage stage) {
         this.stage = stage;
     }
@@ -62,9 +49,8 @@ public class Playable_Screen_Controller  {
         this.root = root;
     }
 
-    //
-//
-//    // Getter methods
+
+   // Getter methods
     public Stage getStage() {
         return stage;
     }
@@ -77,25 +63,14 @@ public class Playable_Screen_Controller  {
         return root;
     }
 
-    private double generateRandomDouble(double minValue, double maxValue) {
-        if (minValue >= maxValue) {
-            throw new IllegalArgumentException("minValue must be less than maxValue");
-        }
-
-        Random random = new Random();
-        return minValue + (random.nextDouble() * (maxValue - minValue));
-    }
-
-
-
 
 
     public void switchToPause(ActionEvent event) throws IOException {
         Sound sound = new Sound();
         sound.buttonSound();
-        root_pause = FXMLLoader.load(getClass().getResource("exit_screen.fxml"));
-        stage_pause = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene_pause = new Scene(root_pause);
+        Parent root_pause = FXMLLoader.load(getClass().getResource("exit_screen.fxml"));
+        Stage stage_pause = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene_pause = new Scene(root_pause);
         stage_pause.setScene(scene_pause);
         stage_pause.show();
     }
@@ -103,7 +78,7 @@ public class Playable_Screen_Controller  {
     public void generateRectangle(Group root)
     {
         while (GlobalData.totalRectangleLength + GlobalData.totalSpaceLength < 180){
-//            System.out.println(counter+"  "+(GlobalData.totalRectangleLength+GlobalData.totalSpaceLength));
+
             if(GlobalData.counter == 0)
             {
                 System.out.println("hi");
@@ -118,40 +93,14 @@ public class Playable_Screen_Controller  {
                 double rectangleWidth = random_generator.getRandomWidth();
                 double rectangleHeight = 70;
                 double spacing = random_generator.getRandomSpacing();
-//                System.out.println(counter);
-
                 GlobalData.spacingArrayList.add(spacing);
-
-
-//                System.out.println("initail width "+rectangleWidth);
-//                System.out.println("initial spacing "+spacing);
-                Rectangle temp = GlobalData.rectangleArrayList.get(GlobalData.score);
                 GlobalData.totalSpaceLength += spacing;
-//                System.out.println("first "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64));
-//                System.out.println("last "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64+spacing));
-                Random random = new Random();
-                if (random.nextInt(10)%2==0){
-                    Image image = new Image(getClass().getResourceAsStream("images/cherry.png"));
-                    ImageView cherry = new ImageView(image);
-                    cherry.setFitHeight(37);
-                    cherry.setFitWidth(37);
-                    cherry.setX(generateRandomDouble(temp.getX()-GlobalData.transitionX+temp.getWidth(),temp.getX()-GlobalData.transitionX+temp.getWidth()+spacing));
-                    cherry.setY(420);
-                    GlobalData.cherryList.add(cherry);
-                    root.getChildren().add(cherry);
-                }
-//                System.out.println("--------------");
-//                System.out.println("rect lenght :"+GlobalData.totalRectangleLength);
-//                System.out.println("space length :"+GlobalData.totalSpaceLength);
-//                System.out.println("--------------");
 
+                cherry.generateCherry(root);
 
-//                System.out.println("Total space length "+GlobalData.totalSpaceLength);
                 Rectangle box = graphics.createRectangle(+200+GlobalData.totalRectangleLength + GlobalData.totalSpaceLength,startY,rectangleWidth, rectangleHeight, customColor);
                 GlobalData.totalRectangleLength += rectangleWidth;
-//                System.out.println("Total Rectangle length "+GlobalData.totalRectangleLength);
-//                box.setLayoutX(GlobalData.totalRectangleLength + GlobalData.totalSpaceLength);
-//                box.setLayoutY(startY);
+
                 System.out.println("box "+box);
                 root.getChildren().add(box);
                 GlobalData.rectangleArrayList.add(box);
@@ -161,21 +110,21 @@ public class Playable_Screen_Controller  {
     }
 
     public void generate_scene(ActionEvent event) throws IOException {
-
-
-
-
         int hero_counter = 0;
-
-
-
-
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("playable_screen.fxml"));
         root = loader.load();
         setRoot(root);
         scene = new Scene(root);
-//        Score.setText("1");
+
+        Label cherry = new Label();
+        cherry.setLayoutX(556);
+        cherry.setLayoutY(28);
+        cherry.setStyle("-fx-font-family: Arial; -fx-font-size: 14; -fx-font-weight: bold;");
+        cherry.setText(GlobalData.cherrycount+" X");
+        cherry.setTextFill(Color.valueOf("#f25b7d"));
+        root.getChildren().add(cherry);
+
+
         Label Score = new Label();
         Score.setLayoutX(315);
         Score.setLayoutY(129);
@@ -184,9 +133,9 @@ public class Playable_Screen_Controller  {
         root.getChildren().add(Score);
 
 //        --- initialising X and Y coordinate of rectangle and hero
-
         double heroStartX = 209;
         double heroStartY = 387;
+
 //        ----  image of the hero
         Image image = new Image(getClass().getResourceAsStream("images/hero11.png"));
         ImageView imageview = new ImageView(image);
@@ -195,6 +144,7 @@ public class Playable_Screen_Controller  {
         imageview.setX(heroStartX+10);
         imageview.setY(heroStartY);
         root.getChildren().add(imageview);
+
 //        ---- stick creation
         GlobalData.stick = graphics.createStick();
         GlobalData.stick.setTranslateX(290);
@@ -202,22 +152,10 @@ public class Playable_Screen_Controller  {
         GlobalData.stick.setTranslateZ(10);
         root.getChildren().add(GlobalData.stick);
 
-
-
         //      ---- producing rectangle
         generateRectangle(root);
-
-
-
         keyEventHandler.setupArrowUpHandler(scene);
         keyEventHandler.setupXHandler(scene, imageview, hero_counter,heroStartX, root,Score);
-
-
-
-
-
-
-
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
