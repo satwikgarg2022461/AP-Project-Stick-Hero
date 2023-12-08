@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -26,7 +27,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.shape.Box;
 
-public class Playable_Screen_Controller {
+public class Playable_Screen_Controller  {
+
     //    int counter = 0;
     Graphics graphics = new Graphics();
     Random_generator random_generator = new Random_generator();
@@ -90,13 +92,13 @@ public class Playable_Screen_Controller {
 
     public void generateRectangle(Group root)
     {
-        while (GlobalData.totalRectangleLength + GlobalData.totalSpaceLength < 400){
+        while (GlobalData.totalRectangleLength + GlobalData.totalSpaceLength < 180){
 //            System.out.println(counter+"  "+(GlobalData.totalRectangleLength+GlobalData.totalSpaceLength));
             if(GlobalData.counter == 0)
             {
-                Rectangle firstBox = graphics.createRectangle(0,startY,87, 70,customColor);
-//                firstBox.setLayoutX(0);
-//                firstBox.setLayoutY(startY);
+                System.out.println("hi");
+                Rectangle firstBox = graphics.createRectangle(200,startY,87, 70,customColor);
+                System.out.println(firstBox);
                 root.getChildren().add(firstBox);
                 GlobalData.rectangleArrayList.add(firstBox);
                 GlobalData.totalRectangleLength += firstBox.getWidth();
@@ -117,7 +119,7 @@ public class Playable_Screen_Controller {
 
 
 //                System.out.println("Total space length "+GlobalData.totalSpaceLength);
-                Rectangle box = graphics.createRectangle(GlobalData.totalRectangleLength + GlobalData.totalSpaceLength,startY,rectangleWidth, rectangleHeight, customColor);
+                Rectangle box = graphics.createRectangle(+200+GlobalData.totalRectangleLength + GlobalData.totalSpaceLength,startY,rectangleWidth, rectangleHeight, customColor);
                 GlobalData.totalRectangleLength += rectangleWidth;
 //                System.out.println("Total Rectangle length "+GlobalData.totalRectangleLength);
 //                box.setLayoutX(GlobalData.totalRectangleLength + GlobalData.totalSpaceLength);
@@ -132,11 +134,11 @@ public class Playable_Screen_Controller {
 
     public void generate_scene(ActionEvent event) throws IOException {
 
+
+
+
         int hero_counter = 0;
-        GlobalData.totalRectangleLength = 0;
-        GlobalData.totalSpaceLength = 0;
-        GlobalData.rectangleArrayList = new ArrayList<>();
-        GlobalData.spacingArrayList = new ArrayList<>();
+
 
 
 
@@ -145,10 +147,17 @@ public class Playable_Screen_Controller {
         root = loader.load();
         setRoot(root);
         scene = new Scene(root);
+//        Score.setText("1");
+        Label Score = new Label();
+        Score.setLayoutX(315);
+        Score.setLayoutY(129);
+        Score.setText("0");
+        Score.setStyle("-fx-font-size: 29; -fx-font-weight: bold;");
+        root.getChildren().add(Score);
 
 //        --- initialising X and Y coordinate of rectangle and hero
 
-        double heroStartX = 9;
+        double heroStartX = 209;
         double heroStartY = 387;
 //        ----  image of the hero
         Image image = new Image(getClass().getResourceAsStream("images/hero11.png"));
@@ -160,7 +169,7 @@ public class Playable_Screen_Controller {
         root.getChildren().add(imageview);
 //        ---- stick creation
         GlobalData.stick = graphics.createStick();
-        GlobalData.stick.setTranslateX(90);
+        GlobalData.stick.setTranslateX(290);
         GlobalData.stick.setTranslateY(490);
         GlobalData.stick.setTranslateZ(10);
         root.getChildren().add(GlobalData.stick);
@@ -173,7 +182,7 @@ public class Playable_Screen_Controller {
 
 
         keyEventHandler.setupArrowUpHandler(scene);
-        keyEventHandler.setupXHandler(scene, imageview, hero_counter,heroStartX, root);
+        keyEventHandler.setupXHandler(scene, imageview, hero_counter,heroStartX, root,Score);
 
 
 
@@ -185,4 +194,6 @@ public class Playable_Screen_Controller {
         stage.setScene(scene);
         stage.show();
     }
+
+
 }

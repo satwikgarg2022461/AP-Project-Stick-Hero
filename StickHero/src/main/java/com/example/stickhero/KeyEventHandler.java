@@ -3,6 +3,7 @@ package com.example.stickhero;
 import javafx.animation.RotateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -14,14 +15,14 @@ public class KeyEventHandler {
         //elongating stick by pressing space key
         scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.UP && GlobalData.isstickrotate) {
-                System.out.println("arrow up");
+//                System.out.println("arrow up");
                 animation.elongateStickWithAnimation();
                 keyEvent.consume();
             }
         });
     }
 
-    public void setupXHandler(Scene scene, ImageView imageview, int hero_counter, double heroStartX, Group root)
+    public void setupXHandler(Scene scene, ImageView imageview, int hero_counter, double heroStartX, Group root,Label Score)
     {
         //          rotating stick by pressing X
         scene.addEventFilter(KeyEvent.KEY_PRESSED, dropStick -> {
@@ -31,7 +32,7 @@ public class KeyEventHandler {
                 rotateTransition.setOnFinished(eventStickRotate -> {
                     GlobalData.isstickrotate = false;
 //                    GlobalData.isMoveCharcter=false;
-                    animation.moveCharacter(scene,imageview, hero_counter, heroStartX,root);
+                    animation.moveCharacter(scene,imageview, hero_counter, heroStartX,root,Score);
                 });
             }
         });

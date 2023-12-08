@@ -19,11 +19,14 @@ public class Exit_screen_controller {
     private Stage stage_home,stage_reload;
     private Scene scene_home,scene_reload;
     private Parent root_home,root_reload;
+    ResestGlobal resestGlobal = new ResestGlobal();
+
 
     public void switchToHome(ActionEvent event) throws IOException
     {
         Sound sound = new Sound();
         sound.buttonSound();
+        resestGlobal.reset();
         root_home = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
         stage_home = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene_home = new Scene(root_home);
@@ -35,8 +38,10 @@ public class Exit_screen_controller {
     {
         Sound sound = new Sound();
         sound.buttonSound();
+        resestGlobal.reset();
         Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
         playable_Screen_Controller.generate_scene(event);
+
     }
 
 

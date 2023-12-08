@@ -15,6 +15,10 @@ public class GlobalData {
     public static Box stick;
     public static int counter =0;
 
+    public static int score = 0;
+    public static double stickX =0;
+    public static double transitionX=0;
+
     public static boolean isstickrotate = true;
     public static boolean isMoveCharcter = true;
 

@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Group xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stickhero.Playable_Screen_Controller">
@@ -32,4 +33,5 @@
          <Font name="Arial Bold" size="14.0" />
       </font>
    </Label>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff69" height="86.0" layoutX="223.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
 </Group>
