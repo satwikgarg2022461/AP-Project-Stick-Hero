@@ -1,6 +1,7 @@
 package com.example.stickhero;
 
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -10,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyEventHandler {
 //    static boolean isstickrotate = true;
+    private boolean isFlipped = false;
     static Animation animation = new Animation();
     public void setupArrowUpHandler(Scene scene) {
         //elongating stick by pressing space key
@@ -20,6 +22,26 @@ public class KeyEventHandler {
                 keyEvent.consume();
             }
         });
+    }
+
+    public void handleKeyPress(KeyCode code,ImageView image) {
+        if (code == KeyCode.SHIFT) {
+            // Toggle the flip state
+            isFlipped = !isFlipped;
+
+            // Adjust the direction of the translation based on the flip state
+            if (isFlipped) {
+                // Flip horizontally
+                image.setScaleY(-1);
+                image.setTranslateY(image.getTranslateY() + image.getFitHeight());
+                // Adjust the direction for the flip
+            } else {
+                // Reset to normal orientation
+                image.setScaleY(1);
+                image.setTranslateY(image.getTranslateY() - image.getFitHeight());
+                // Reset the direction for normal motion
+            }
+        }
     }
 
     public void setupXHandler(Scene scene, ImageView imageview, int hero_counter, double heroStartX, Group root,Label Score)

@@ -1,9 +1,6 @@
 package com.example.stickhero;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.RotateTransition;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Group;
@@ -38,6 +35,24 @@ public class Animation {
     double stickHeight=9.6;
     private double scalingFactor = 1.0;
     double initialY = 490;
+    private boolean collisionEnabled = false;
+
+    private ImageView oldcherry = null;
+    private boolean increaseCherry = false;
+    private boolean collisionRunning = false;
+    private boolean cherryTaken = false;
+    public void checkCollision(ImageView image1, ImageView image2,Group root){
+        if (image1.getBoundsInParent().intersects(image2.getBoundsInParent())){
+            System.out.println("got it");
+            root.getChildren().remove(image2);
+            GlobalData.cherryList.remove(GlobalData.cherryList.size()-1);
+            GlobalData.cherrycount+=1;
+            cherryTaken=true;
+            collisionEnabled=false;
+        }
+    }
+
+
 
     public void elongateStickWithAnimation()
     {
@@ -60,8 +75,23 @@ public class Animation {
         return rotateTransition;
     }
 
+
+
     public void moveCharacter(Scene scene,ImageView hero, int hero_counter, double heroStartX, Group root,Label Score)
     {
+        AnimationTimer collisionTimer;
+        if (GlobalData.cherryList.size()!=0) {
+            collisionTimer = new AnimationTimer() {
+                @Override
+                public void handle(long l) {
+                    if (collisionEnabled) {
+                        checkCollision(hero, GlobalData.cherryList.get(GlobalData.cherryList.size() - 1), root);
+                    }
+                }
+            };
+        } else {
+            collisionTimer = null;
+        }
         if(GlobalData.isMoveCharcter) {
             System.out.println("=============================");
             System.out.println("score before " + GlobalData.score);
@@ -81,6 +111,20 @@ public class Animation {
                 Timeline timeline = new Timeline();
 
                 timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(0.5), e -> {
+
+                    collisionEnabled=true;
+                    if (collisionTimer!=null){
+                        collisionTimer.start();
+                        collisionRunning=true;
+                    }
+                    scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+                        if (keyEvent.getCode() == KeyCode.SPACE && GlobalData.isstickrotate) {
+                            System.out.println("arrow up");
+
+                            keyEvent.consume();
+                        }
+                    });
+
                     Rectangle temp = GlobalData.rectangleArrayList.get(GlobalData.score-1);
                     System.out.println("temp X" +temp.getX());
                     System.out.println("transX" +GlobalData.transitionX);
@@ -88,7 +132,9 @@ public class Animation {
                     System.out.println(temp.getX()-GlobalData.transitionX+temp.getWidth()-64);
                     hero.setX(temp.getX()-GlobalData.transitionX + temp.getWidth()-64);
                     System.out.println(hero.getX());
+                    KeyEventHandler keyEventHandler1 = new KeyEventHandler();
                     TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.5), hero);
+                    scene.setOnKeyPressed(ev -> keyEventHandler1.handleKeyPress(ev.getCode(),hero));
 
 
                     translateTransition.setToX(spacing + rectangleLenght);
@@ -96,6 +142,11 @@ public class Animation {
 //                    translateTransition.setCycleCount(1);
                     translateTransition.setOnFinished(eventhhjhjj ->
                     {
+                        if(collisionRunning) {
+                            collisionRunning=false;
+                            collisionEnabled = false;
+                            collisionTimer.stop();
+                        }
                         Score.setText(""+GlobalData.score);
 //                        initialize();
                         GlobalData.stickX = spacing + rectangleLenght;
@@ -105,6 +156,9 @@ public class Animation {
                         GlobalData.isstickrotate = true;
 
                         root.getChildren().remove(GlobalData.stick);
+                        if (cherryTaken==false && GlobalData.cherryList.size()!=0) {
+                            root.getChildren().remove(GlobalData.cherryList.get(GlobalData.cherryList.size() - 1));
+                        }
                         moveBackBlocksAndCharacter(scene, hero, hero_counter, heroStartX, root,Score);
 
                     });
@@ -162,6 +216,7 @@ public class Animation {
 //                        GlobalData.spacingArrayList.remove(delFirstspace);
                         playableScreenController.generateRectangle(root);
                         GlobalData.isMoveCharcter = true;
+                        System.out.println("cherry count :"+GlobalData.cherrycount);
                     }
                 });
             }

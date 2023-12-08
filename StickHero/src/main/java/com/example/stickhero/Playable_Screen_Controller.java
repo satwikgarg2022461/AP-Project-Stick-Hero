@@ -4,6 +4,7 @@ package com.example.stickhero;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.animation.*;
@@ -76,6 +77,15 @@ public class Playable_Screen_Controller  {
         return root;
     }
 
+    private double generateRandomDouble(double minValue, double maxValue) {
+        if (minValue >= maxValue) {
+            throw new IllegalArgumentException("minValue must be less than maxValue");
+        }
+
+        Random random = new Random();
+        return minValue + (random.nextDouble() * (maxValue - minValue));
+    }
+
 
 
 
@@ -115,7 +125,25 @@ public class Playable_Screen_Controller  {
 
 //                System.out.println("initail width "+rectangleWidth);
 //                System.out.println("initial spacing "+spacing);
+                Rectangle temp = GlobalData.rectangleArrayList.get(GlobalData.score);
                 GlobalData.totalSpaceLength += spacing;
+//                System.out.println("first "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64));
+//                System.out.println("last "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64+spacing));
+                Random random = new Random();
+                if (random.nextInt(10)%2==0){
+                    Image image = new Image(getClass().getResourceAsStream("images/cherry.png"));
+                    ImageView cherry = new ImageView(image);
+                    cherry.setFitHeight(37);
+                    cherry.setFitWidth(37);
+                    cherry.setX(generateRandomDouble(temp.getX()-GlobalData.transitionX+temp.getWidth(),temp.getX()-GlobalData.transitionX+temp.getWidth()+spacing));
+                    cherry.setY(420);
+                    GlobalData.cherryList.add(cherry);
+                    root.getChildren().add(cherry);
+                }
+//                System.out.println("--------------");
+//                System.out.println("rect lenght :"+GlobalData.totalRectangleLength);
+//                System.out.println("space length :"+GlobalData.totalSpaceLength);
+//                System.out.println("--------------");
 
 
 //                System.out.println("Total space length "+GlobalData.totalSpaceLength);
