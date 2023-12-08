@@ -14,7 +14,7 @@ public class KeyEventHandler {
     public void setupArrowUpHandler(Scene scene) {
         //elongating stick by pressing space key
         scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.UP && GlobalData.isstickrotate) {
+            if (keyEvent.getCode() == KeyCode.SPACE && GlobalData.isstickrotate) {
 //                System.out.println("arrow up");
                 animation.elongateStickWithAnimation();
                 keyEvent.consume();
