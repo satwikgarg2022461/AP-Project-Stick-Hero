@@ -13,7 +13,6 @@ public class GlobalData {
     public static double totalSpaceLength = 0;
     public static ArrayList<Rectangle> rectangleArrayList = new ArrayList<>();
     public static ArrayList<ImageView> cherryList = new ArrayList<>();
-//    public static double totalSpacing = 0;
 
     public static ArrayList<Double> spacingArrayList = new ArrayList<>();
     public static Box stick;

@@ -49,8 +49,7 @@ public class GameLoadController {
         this.root = root;
     }
     
-//    Graphics graphics = new Graphics();
-//    Random_generator random_generator = new Random_generator();
+
     
 
     public void switchToPlayScreen(ActionEvent event) throws IOException {
@@ -58,8 +57,5 @@ public class GameLoadController {
         sound.buttonSound();
     	Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
     	playable_Screen_Controller.generate_scene(event);
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("playable_screen.fxml"));
-//        root = loader.load();
-//        scene = new Scene(root);
     }
 }

@@ -1,8 +1,13 @@
 package com.example.stickhero;
 
 import java.util.ArrayList;
+interface Reset
+{
+    public void reset();
+    public void reviveReset();
+}
 
-public class ResestGlobal {
+class ResestGlobal implements Reset {
 
     public void reset()
     {

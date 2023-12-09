@@ -23,6 +23,37 @@ public class Main_screen_controller implements Initializable {
     private Scene scene;
     private Parent root;
 
+
+    // Getter for Stage
+    public Stage getStage() {
+        return stage;
+    }
+
+    // Setter for Stage
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    // Getter for Scene
+    public Scene getScene() {
+        return scene;
+    }
+
+    // Setter for Scene
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+
+    // Getter for Root
+    public Parent getRoot() {
+        return root;
+    }
+
+    // Setter for Root
+    public void setRoot(Parent root) {
+        this.root = root;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TranslateTransition translateTransition = new TranslateTransition();

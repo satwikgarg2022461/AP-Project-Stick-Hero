@@ -21,9 +21,7 @@ public class HelloApplication extends Application {
         sampleController.initialize(null, null);
         primaryStage.setTitle("Stick Heros");
         Image icon = new Image(getClass().getResourceAsStream("images/icon.png"));
-//        ImageView imageview = new ImageView(image);
         primaryStage.getIcons().add(icon);
-
         primaryStage.setResizable(false);
         primaryStage.show();
     }

@@ -18,7 +18,8 @@ import javafx.stage.Stage;
 public class Playable_Screen_Controller  {
 
 
-    Graphics graphics = new Graphics();
+    Graphics graphicsRectangle = CreateRectangle.getInstance();
+    Graphics GraphicsStick = CreateStick.getCreateStickInstance();
     Cherry cherry = new Cherry();
     Random_generator random_generator = new Random_generator();
     //    Animation animation = new Animation();
@@ -82,12 +83,11 @@ public class Playable_Screen_Controller  {
     {
 //        keyEventHandler.setupFlip(scene,imageview,root);
         while (GlobalData.totalRectangleLength + GlobalData.totalSpaceLength < 180){
-            System.out.println("hi");
+//            System.out.println("hi");
             if(GlobalData.counter == 0)
             {
-
-                Rectangle firstBox = graphics.createRectangle(200,startY,87, 70,customColor);
-                System.out.println(firstBox);
+                Rectangle firstBox = graphicsRectangle.createRectangle(200,startY,87, 70,customColor);
+//                System.out.println(firstBox);
                 root.getChildren().add(firstBox);
                 GlobalData.rectangleArrayList.add(firstBox);
                 GlobalData.totalRectangleLength += firstBox.getWidth();
@@ -98,15 +98,15 @@ public class Playable_Screen_Controller  {
                 double rectangleHeight = 70;
                 double spacing = random_generator.getRandomSpacing();
                 GlobalData.spacingArrayList.add(spacing);
-                System.out.println("spacing "+spacing);
+//                System.out.println("spacing "+spacing);
                 GlobalData.totalSpaceLength += spacing;
 
                 cherry.generateCherry(root);
 
-                Rectangle box = graphics.createRectangle(+200+GlobalData.totalRectangleLength + GlobalData.totalSpaceLength,startY,rectangleWidth, rectangleHeight, customColor);
+                Rectangle box = graphicsRectangle.createRectangle(+200+GlobalData.totalRectangleLength + GlobalData.totalSpaceLength,startY,rectangleWidth, rectangleHeight, customColor);
                 GlobalData.totalRectangleLength += rectangleWidth;
 
-                System.out.println("box "+box);
+//                System.out.println("box "+box);
                 root.getChildren().add(box);
                 GlobalData.rectangleArrayList.add(box);
             }
@@ -151,7 +151,7 @@ public class Playable_Screen_Controller  {
         root.getChildren().add(imageview);
 
 //        ---- stick creation
-        GlobalData.stick = graphics.createStick();
+        GlobalData.stick = GraphicsStick.createStick();
         GlobalData.stick.setTranslateX(290);
         GlobalData.stick.setTranslateY(490);
         GlobalData.stick.setTranslateZ(10);
@@ -167,6 +167,5 @@ public class Playable_Screen_Controller  {
         stage.setScene(scene);
         stage.show();
     }
-
 
 }

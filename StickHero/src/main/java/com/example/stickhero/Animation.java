@@ -28,10 +28,9 @@ import java.util.ResourceBundle;
 
 public class Animation {
     Playable_Screen_Controller playableScreenController = new Playable_Screen_Controller();
-    Graphics graphics = new Graphics();
+    Graphics graphicsStick = CreateStick.getCreateStickInstance();
     ResestGlobal resestGlobal = new ResestGlobal();
-
-
+    
     KeyEventHandler keyEventHandler = new KeyEventHandler();
 
     private boolean collisionEnabled = false;
@@ -65,14 +64,10 @@ public class Animation {
         this.cherryTaken = cherryTaken;
     }
 
-
-
-
-
-
+    
     public void checkCollision(ImageView image1, ImageView image2,Group root){
         if (image1.getBoundsInParent().intersects(image2.getBoundsInParent())){
-            System.out.println("got it");
+//            System.out.println("got it");
             root.getChildren().remove(image2);
             GlobalData.cherryList.remove(GlobalData.cherryList.size()-1);
             GlobalData.cherrycount+=1;
@@ -80,13 +75,10 @@ public class Animation {
             collisionEnabled=false;
         }
     }
-
-
-
+    
     public void elongateStickWithAnimation()
     {
         GlobalData.stick.getTransforms().add(new Scale(1, 1.1, 1, GlobalData.stick.getTranslateX(), GlobalData.stick.getBoundsInLocal().getMaxY(), GlobalData.stick.getTranslateZ()));
-
         GlobalData.stickHeight*=1.1;
     }
 
@@ -106,19 +98,19 @@ public class Animation {
     {
 
         if(GlobalData.isMoveCharcter) {
-            System.out.println("=============================");
-            System.out.println("score before " + GlobalData.score);
+//            System.out.println("=============================");
+//            System.out.println("score before " + GlobalData.score);
             int spacing = (int) Math.round(GlobalData.spacingArrayList.get(GlobalData.score));
             int rectangleLenght = (int) Math.round(GlobalData.rectangleArrayList.get(GlobalData.score + 1).getWidth());
             int stickLength = (int) Math.round(GlobalData.stickHeight);
-            System.out.println("spacing " + spacing);
-            System.out.println("rectangle lenght " + rectangleLenght);
-            System.out.println("Total length "+ (spacing+rectangleLenght));
-            System.out.println("StickLength " + stickLength);
+//            System.out.println("spacing " + spacing);
+//            System.out.println("rectangle lenght " + rectangleLenght);
+//            System.out.println("Total length "+ (spacing+rectangleLenght));
+//            System.out.println("StickLength " + stickLength);
 
             if (spacing-8<= stickLength && stickLength <= rectangleLenght + spacing && GlobalData.isMoveCharcter) {
-                System.out.println("bye");
-//               ----cherry collision
+//                System.out.println("bye");
+//               ---- cherry collision
                 AnimationTimer collisionTimer;
                 if (GlobalData.cherryList.size()!=0) {
                     collisionTimer = new AnimationTimer() {
@@ -153,15 +145,13 @@ public class Animation {
                     }
 
                     Rectangle temp = GlobalData.rectangleArrayList.get(GlobalData.score-1);
-                    System.out.println("temp rectangle "+temp);
-                    System.out.println("temp X" +temp.getX());
-                    System.out.println("transX" +GlobalData.transitionX);
-//                    System.out.println(temp.getWidth());
-                    System.out.println("hero set x "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64));
+//                    System.out.println("temp rectangle "+temp);
+//                    System.out.println("temp X" +temp.getX());
+//                    System.out.println("transX" +GlobalData.transitionX);
+//                    System.out.println("hero set x "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64));
                     hero.setX(temp.getX()-GlobalData.transitionX + temp.getWidth()-64);
-                    System.out.println(hero.getX());
+//                    System.out.println(hero.getX());
                     TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), hero);
-//                    keyEventHandler.setupFlip(scene,hero,root);
 
                     translateTransition.setToX(spacing + rectangleLenght);
 
@@ -192,12 +182,9 @@ public class Animation {
                     translateTransition.play();
                 }));
                 timeline.play();
-
             }
-
             else {
-                System.out.println("hi");
-                ActionEvent event = new ActionEvent();
+//                System.out.println("hi");
                 int index =0;
                 if(GlobalData.score>0)
                 {
@@ -206,7 +193,7 @@ public class Animation {
                 Rectangle temp = GlobalData.rectangleArrayList.get(index);
                 hero.setX(temp.getX()-GlobalData.transitionX + temp.getWidth()-44);
                 TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), hero);
-                System.out.println("stick length"+stickLength);
+//                System.out.println("stick length"+stickLength);
                 translateTransition.setByX(stickLength +5);
                 translateTransition.setOnFinished(eventHeroFall ->
                 {
@@ -214,7 +201,6 @@ public class Animation {
                     translateTransition1.setToY(600);
                     translateTransition1.setOnFinished(eventPauseScreen -> {
                         try {
-//                            resestGlobal.reset();
                             switchToExit(hero,scene);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -254,10 +240,10 @@ public class Animation {
                         keyEventHandler.setupArrowUpHandler(scene);
                         keyEventHandler.setupXHandler(scene, hero, hero_counter,heroStartX, root,Score,cherry,stage);
                         flag[0]++;
-                        System.out.println("----------------");
-                        GlobalData.stick = graphics.createStick();
-                        System.out.println(GlobalData.rectangleArrayList.get(GlobalData.score));
-                        System.out.println(xdisplacement);
+//                        System.out.println("----------------");
+                        GlobalData.stick = graphicsStick.createStick();
+//                        System.out.println(GlobalData.rectangleArrayList.get(GlobalData.score));
+//                        System.out.println(xdisplacement);
                         Rectangle temp = GlobalData.rectangleArrayList.get(GlobalData.score);
                         GlobalData.transitionX = xdisplacement;
                         GlobalData.stick.setTranslateX(temp.getX() - xdisplacement + temp.getWidth()+7);
@@ -270,7 +256,7 @@ public class Animation {
                         GlobalData.totalSpaceLength -= delFirstspace;
                         playableScreenController.generateRectangle(root);
                         GlobalData.isMoveCharcter = true;
-                        System.out.println("cherry count :"+GlobalData.cherrycount);
+//                        System.out.println("cherry count :"+GlobalData.cherrycount);
                     }
                 });
             }
@@ -290,14 +276,21 @@ public class Animation {
         Scene scene_pause = new Scene(root_pause);
 
 // Create a new stage
-        Stage stage_pause = new Stage();
-        stage_pause = (Stage) GlobalData.scene.getWindow();
+        Stage stage_pause = null;
+        try {
+            stage_pause = (Stage) GlobalData.scene.getWindow();
+        }
+        catch (Exception e)
+        {
+            System.out.print("");
+        }
+        
 
         Label score = new Label();
         Label cherry = new Label();
         score.setLayoutX(348);
         score.setLayoutY(251);
-        System.out.println(GlobalData.score);
+//        System.out.println(GlobalData.score);
         score.setText(GlobalData.realScore + "");
         score.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-font-family: Arial");
         root_pause.getChildren().add(score);
@@ -309,10 +302,25 @@ public class Animation {
         root_pause.getChildren().add(cherry);
 
 // Set the scene for the new stage
-        stage_pause.setScene(scene_pause);
+        try
+        {
+            stage_pause.setScene(scene_pause);
+        }
+        catch (Exception e)
+        {
+            System.out.print("");
+        }
+
 
 // Show the new stage
-        stage_pause.show();
+        try {
+            stage_pause.show();
+        }
+        catch (Exception e)
+        {
+            System.out.print("");
+        }
+
 
     }
 
