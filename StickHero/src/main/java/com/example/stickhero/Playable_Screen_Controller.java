@@ -159,6 +159,7 @@ public class Playable_Screen_Controller  {
 
         //      ---- producing rectangle
         generateRectangle(root);
+        keyEventHandler.setupFlip(scene,imageview,root);
         keyEventHandler.setupArrowUpHandler(scene);
         GlobalData.scene = scene;
         keyEventHandler.setupXHandler(scene, imageview, hero_counter,heroStartX, root,Score,cherry,stage);

@@ -161,7 +161,7 @@ public class Animation {
                     hero.setX(temp.getX()-GlobalData.transitionX + temp.getWidth()-64);
                     System.out.println(hero.getX());
                     TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), hero);
-                    keyEventHandler.setupFlip(scene,hero,root);
+//                    keyEventHandler.setupFlip(scene,hero,root);
 
                     translateTransition.setToX(spacing + rectangleLenght);
 
@@ -183,6 +183,9 @@ public class Animation {
                         root.getChildren().remove(GlobalData.stick);
                         if (cherryTaken==false && GlobalData.cherryList.size()!=0) {
                             root.getChildren().remove(GlobalData.cherryList.get(GlobalData.cherryList.size() - 1));
+                        }
+                        else {
+                            cherryTaken = false;
                         }
                         moveBackBlocksAndCharacter(scene, hero, hero_counter, heroStartX, root,Score,cherry,stage);
                     });
