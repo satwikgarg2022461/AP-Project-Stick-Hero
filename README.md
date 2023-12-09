@@ -1,6 +1,7 @@
 # Stick-Hero
 
 # Contribution
+Group - 15  
 This Project is made by Satwik Garg(2022461) & Saurav Haldar (2022464)  
 Github Link - https://github.com/satwikgarg2022461/AP-Project-Stick-Hero.git  
 Demo Video - https://drive.google.com/file/d/1jNZBgBxD2EFm3pux-1-OP4s4Cmd0SPOJ/view?usp=sharing
