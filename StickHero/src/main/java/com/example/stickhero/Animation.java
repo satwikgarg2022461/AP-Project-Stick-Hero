@@ -151,7 +151,7 @@ public class Animation {
 //                    System.out.println("hero set x "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64));
                     hero.setX(temp.getX()-GlobalData.transitionX + temp.getWidth()-64);
 //                    System.out.println(hero.getX());
-                    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), hero);
+                    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), hero);
 
                     translateTransition.setToX(spacing + rectangleLenght);
 

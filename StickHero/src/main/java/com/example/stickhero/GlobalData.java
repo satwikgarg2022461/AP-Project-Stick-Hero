@@ -2,6 +2,7 @@ package com.example.stickhero;
 
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -30,5 +31,6 @@ public class GlobalData {
     public static boolean isMoveCharcter = true;
     public static double stickHeight = 9.6;
     public static Scene scene;
+
 
 }

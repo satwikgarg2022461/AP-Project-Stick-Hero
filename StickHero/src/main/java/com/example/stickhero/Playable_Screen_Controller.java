@@ -1,7 +1,12 @@
 package com.example.stickhero;
 
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +20,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
-public class Playable_Screen_Controller  {
+public class Playable_Screen_Controller implements Serializable {
+    public static final long serialVersionUID = 41L;
 
 
     Graphics graphicsRectangle = CreateRectangle.getInstance();
@@ -167,6 +173,30 @@ public class Playable_Screen_Controller  {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void SaveButton(ActionEvent event) throws IOException {
+        System.out.println("save button");
+        ObjectOutputStream out =null;
+        ArrayList<Integer> arr = new ArrayList<>();
+        arr.add(GlobalData.realScore);
+        arr.add(GlobalData.cherrycount);
+        try {
+            System.out.println("try");
+            out = new ObjectOutputStream(new FileOutputStream("load.txt"));
+            out.writeObject(arr);
+        }
+        catch (Exception e)
+        {
+//            e.printStackTrace();
+            System.out.println("No previous game record");
+        }
+        finally {
+            if(out!=null)
+            {
+                out.close();
+            }
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.stickhero;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,10 +18,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
-public class GameLoadController {
-
+public class GameLoadController implements Serializable {
+    public static final long serialVersionUID = 42L;
+    @FXML
+    public Button loadbutton;
     @FXML
     private Button playbutton;
+    Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
     private Stage stage;
     private Scene scene;
     private Group root;
@@ -48,15 +52,51 @@ public class GameLoadController {
     public void setRoot(Group root) {
         this.root = root;
     }
-    
-
-    
 
     public void switchToPlayScreen(ActionEvent event) throws IOException {
         SoundFactory soundFactory = new SoundFactory();
         Sound button = soundFactory.getSound("Button");
         button.getSound();
-    	Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
+
     	playable_Screen_Controller.generate_scene(event);
     }
+
+    public void LoadswitchtoPlayScreen(ActionEvent event) throws IOException, ClassNotFoundException
+    {
+        System.out.println("Load is working");
+        SoundFactory soundFactory = new SoundFactory();
+        Sound button = soundFactory.getSound("Button");
+        button.getSound();
+        ObjectInputStream in =null;
+        ArrayList<Integer> arr= null;
+        try {
+            in = new ObjectInputStream(new FileInputStream("load.txt"));
+            arr = (ArrayList<Integer>) in.readObject();
+        }
+        catch (Exception e)
+        {
+//            e.printStackTrace();
+            System.out.println("No previous game record");
+        }
+        finally {
+            if(in!=null)
+            {
+                in.close();
+            }
+            if(arr != null)
+            {
+                GlobalData.realScore = arr.get(0);
+                GlobalData.cherrycount = arr.get(1);
+                playable_Screen_Controller.generate_scene(event);
+            }
+            else
+            {
+                System.out.println("No previous game record");
+            }
+
+
+        }
+    }
+
+
 }

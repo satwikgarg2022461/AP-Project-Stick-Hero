@@ -27,4 +27,5 @@
       </image>
    </ImageView>
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff69" height="86.0" layoutX="223.0" layoutY="107.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+   <Button layoutX="303.0" layoutY="23.0" mnemonicParsing="false" onAction="#SaveButton" style="-fx-background-color: #FA7070;" text="Save" textFill="WHITE" />
 </Group>

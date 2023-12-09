@@ -53,14 +53,10 @@ public class Exit_screen_controller {
         SoundFactory soundFactory = new SoundFactory();
         Sound button = soundFactory.getSound("Button");
         button.getSound();
-//        int score = GlobalData.score;
-//        int cherryCount = GlobalData.cherrycount;
 
         if(GlobalData.cherrycount >= 2)
         {
             resestGlobal.reviveReset();
-//            GlobalData.score = score;
-//            GlobalData.cherrycount = cherryCount-2;
             Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
             playable_Screen_Controller.generate_scene(event);
 
