@@ -102,7 +102,7 @@ public class Animation {
 
 
 
-    public void moveCharacter(Scene scene,ImageView hero, int hero_counter, double heroStartX, Group root,Label Score)
+    public void moveCharacter(Scene scene,ImageView hero, int hero_counter, double heroStartX, Group root,Label Score,Label cherry,Stage stage)
     {
 
         if(GlobalData.isMoveCharcter) {
@@ -137,6 +137,7 @@ public class Animation {
 
 
                 GlobalData.score++;
+                GlobalData.realScore++;
                 GlobalData.isMoveCharcter = false;
 
 
@@ -152,14 +153,15 @@ public class Animation {
                     }
 
                     Rectangle temp = GlobalData.rectangleArrayList.get(GlobalData.score-1);
+                    System.out.println("temp rectangle "+temp);
                     System.out.println("temp X" +temp.getX());
                     System.out.println("transX" +GlobalData.transitionX);
-                    System.out.println(temp.getWidth());
-                    System.out.println(temp.getX()-GlobalData.transitionX+temp.getWidth()-64);
+//                    System.out.println(temp.getWidth());
+                    System.out.println("hero set x "+(temp.getX()-GlobalData.transitionX+temp.getWidth()-64));
                     hero.setX(temp.getX()-GlobalData.transitionX + temp.getWidth()-64);
                     System.out.println(hero.getX());
                     TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), hero);
-                    keyEventHandler.setupFlip(scene,hero);
+                    keyEventHandler.setupFlip(scene,hero,root);
 
                     translateTransition.setToX(spacing + rectangleLenght);
 
@@ -170,7 +172,9 @@ public class Animation {
                             collisionEnabled = false;
                             collisionTimer.stop();
                         }
-                        Score.setText(""+GlobalData.score);
+                        Score.setText(""+GlobalData.realScore);
+                        cherry.setText(GlobalData.cherrycount+" X");
+
                         GlobalData.stickX = spacing + rectangleLenght;
                         Sound sound = new Sound();
                         sound.scoreSound();
@@ -180,7 +184,7 @@ public class Animation {
                         if (cherryTaken==false && GlobalData.cherryList.size()!=0) {
                             root.getChildren().remove(GlobalData.cherryList.get(GlobalData.cherryList.size() - 1));
                         }
-                        moveBackBlocksAndCharacter(scene, hero, hero_counter, heroStartX, root,Score);
+                        moveBackBlocksAndCharacter(scene, hero, hero_counter, heroStartX, root,Score,cherry,stage);
                     });
                     translateTransition.play();
                 }));
@@ -207,8 +211,8 @@ public class Animation {
                     translateTransition1.setToY(600);
                     translateTransition1.setOnFinished(eventPauseScreen -> {
                         try {
-                            resestGlobal.reset();
-                            switchToExit(hero);
+//                            resestGlobal.reset();
+                            switchToExit(hero,scene);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -224,7 +228,7 @@ public class Animation {
 
     }
 
-    public void moveBackBlocksAndCharacter(Scene scene,ImageView hero, int hero_counter, double heroStartX, Group root,Label Score){
+    public void moveBackBlocksAndCharacter(Scene scene,ImageView hero, int hero_counter, double heroStartX, Group root,Label Score,Label cherry,Stage stage){
 
         final int[] flag = {0};
         flag[0]=0;
@@ -245,7 +249,7 @@ public class Animation {
                     if(flag[0] == 0)
                     {
                         keyEventHandler.setupArrowUpHandler(scene);
-                        keyEventHandler.setupXHandler(scene, hero, hero_counter,heroStartX, root,Score);
+                        keyEventHandler.setupXHandler(scene, hero, hero_counter,heroStartX, root,Score,cherry,stage);
                         flag[0]++;
                         System.out.println("----------------");
                         GlobalData.stick = graphics.createStick();
@@ -272,32 +276,41 @@ public class Animation {
         timeline.play();
     }
 
-    public void switchToExit(ImageView hero) throws IOException {
+    public void switchToExit(ImageView hero,Scene scene) throws IOException {
         Group root_pause = null;
         try {
             root_pause = FXMLLoader.load(getClass().getResource("exit_screen.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Stage stage_pause = (Stage) hero.getScene().getWindow();
+
         Scene scene_pause = new Scene(root_pause);
-        stage_pause = (Stage) hero.getScene().getWindow();
-        stage_pause.setScene(scene_pause);
+
+// Create a new stage
+        Stage stage_pause = new Stage();
+        stage_pause = (Stage) GlobalData.scene.getWindow();
 
         Label score = new Label();
-        Label cherry =new Label();
+        Label cherry = new Label();
         score.setLayoutX(348);
         score.setLayoutY(251);
-        score.setText(GlobalData.score+"");
+        System.out.println(GlobalData.score);
+        score.setText(GlobalData.realScore + "");
         score.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-font-family: Arial");
         root_pause.getChildren().add(score);
 
         cherry.setLayoutX(368);
         cherry.setLayoutY(291);
-        cherry.setText(GlobalData.cherrycount+"");
+        cherry.setText(GlobalData.cherrycount + "");
         cherry.setStyle("-fx-font-size: 24; -fx-font-weight: bold; -fx-font-family: Arial");
         root_pause.getChildren().add(cherry);
+
+// Set the scene for the new stage
+        stage_pause.setScene(scene_pause);
+
+// Show the new stage
         stage_pause.show();
+
     }
 
 

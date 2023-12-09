@@ -16,6 +16,8 @@ public class Exit_screen_controller {
     private Button home;
     @FXML
     private Button reload;
+    @FXML
+    private Button revive;
     private Stage stage_home,stage_reload;
     private Scene scene_home,scene_reload;
     private Parent root_home,root_reload;
@@ -41,6 +43,30 @@ public class Exit_screen_controller {
         resestGlobal.reset();
         Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
         playable_Screen_Controller.generate_scene(event);
+    }
+
+    public void revive(ActionEvent event) throws IOException
+    {
+        System.out.println("===========revive================");
+        Sound sound = new Sound();
+        sound.buttonSound();
+//        int score = GlobalData.score;
+//        int cherryCount = GlobalData.cherrycount;
+
+        if(GlobalData.cherrycount >= 2)
+        {
+            resestGlobal.reviveReset();
+//            GlobalData.score = score;
+//            GlobalData.cherrycount = cherryCount-2;
+            Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
+            playable_Screen_Controller.generate_scene(event);
+
+        }
+        else
+        {
+            System.out.println("Not enough cherry");
+        }
+
     }
 
 

@@ -25,6 +25,9 @@ public class Playable_Screen_Controller  {
     KeyEventHandler keyEventHandler = new KeyEventHandler();
     double startY = 488;
     Color customColor = Color.valueOf("#795234");
+    private Image image;
+
+    private ImageView imageview;
 
 
     @FXML
@@ -77,11 +80,12 @@ public class Playable_Screen_Controller  {
 
     public void generateRectangle(Group root)
     {
+//        keyEventHandler.setupFlip(scene,imageview,root);
         while (GlobalData.totalRectangleLength + GlobalData.totalSpaceLength < 180){
-
+            System.out.println("hi");
             if(GlobalData.counter == 0)
             {
-                System.out.println("hi");
+
                 Rectangle firstBox = graphics.createRectangle(200,startY,87, 70,customColor);
                 System.out.println(firstBox);
                 root.getChildren().add(firstBox);
@@ -94,6 +98,7 @@ public class Playable_Screen_Controller  {
                 double rectangleHeight = 70;
                 double spacing = random_generator.getRandomSpacing();
                 GlobalData.spacingArrayList.add(spacing);
+                System.out.println("spacing "+spacing);
                 GlobalData.totalSpaceLength += spacing;
 
                 cherry.generateCherry(root);
@@ -128,7 +133,7 @@ public class Playable_Screen_Controller  {
         Label Score = new Label();
         Score.setLayoutX(315);
         Score.setLayoutY(129);
-        Score.setText("0");
+        Score.setText(""+GlobalData.realScore);
         Score.setStyle("-fx-font-size: 29; -fx-font-weight: bold;");
         root.getChildren().add(Score);
 
@@ -137,8 +142,8 @@ public class Playable_Screen_Controller  {
         double heroStartY = 387;
 
 //        ----  image of the hero
-        Image image = new Image(getClass().getResourceAsStream("images/hero11.png"));
-        ImageView imageview = new ImageView(image);
+        image = new Image(getClass().getResourceAsStream("images/hero11.png"));
+        imageview = new ImageView(image);
         imageview.setFitWidth(100);
         imageview.setFitHeight(100);
         imageview.setX(heroStartX+10);
@@ -155,7 +160,8 @@ public class Playable_Screen_Controller  {
         //      ---- producing rectangle
         generateRectangle(root);
         keyEventHandler.setupArrowUpHandler(scene);
-        keyEventHandler.setupXHandler(scene, imageview, hero_counter,heroStartX, root,Score);
+        GlobalData.scene = scene;
+        keyEventHandler.setupXHandler(scene, imageview, hero_counter,heroStartX, root,Score,cherry,stage);
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();

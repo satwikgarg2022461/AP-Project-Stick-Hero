@@ -1,13 +1,16 @@
 package com.example.stickhero;
 
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.transform.Rotate;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.animation.RotateTransition;
 
 public class KeyEventHandler {
 
@@ -23,7 +26,7 @@ public class KeyEventHandler {
         });
     }
 
-    public void setupFlip(Scene scene,ImageView image) {
+    public void setupFlip(Scene scene,ImageView image,Group root) {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
             if (keyEvent.getCode() == KeyCode.UP) {
             // Toggle the flip state
@@ -45,7 +48,7 @@ public class KeyEventHandler {
         });
     }
 
-    public void setupXHandler(Scene scene, ImageView imageview, int hero_counter, double heroStartX, Group root,Label Score)
+    public void setupXHandler(Scene scene, ImageView imageview, int hero_counter, double heroStartX, Group root, Label Score, Label cherry, Stage stage)
     {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, dropStick -> {
 
@@ -53,7 +56,7 @@ public class KeyEventHandler {
                 RotateTransition rotateTransition = animation.createDropAnimation();
                 rotateTransition.setOnFinished(eventStickRotate -> {
                     GlobalData.isstickrotate = false;
-                    animation.moveCharacter(scene,imageview, hero_counter, heroStartX,root,Score);
+                    animation.moveCharacter(scene,imageview, hero_counter, heroStartX,root,Score,cherry,stage);
                 });
             }
         });
