@@ -166,8 +166,9 @@ public class Animation {
                         cherry.setText(GlobalData.cherrycount+" X");
 
                         GlobalData.stickX = spacing + rectangleLenght;
-                        Sound sound = new Sound();
-                        sound.scoreSound();
+                        SoundFactory soundFactory = new SoundFactory();
+                        Sound button = soundFactory.getSound("Score");
+                        button.getSound();
                         GlobalData.stickHeight = 9.6;
                         GlobalData.isstickrotate = true;
                         root.getChildren().remove(GlobalData.stick);
@@ -198,6 +199,9 @@ public class Animation {
                 translateTransition.setOnFinished(eventHeroFall ->
                 {
                     TranslateTransition translateTransition1 = new TranslateTransition(Duration.seconds(2),hero);
+                    SoundFactory soundFactory = new SoundFactory();
+                    Sound button = soundFactory.getSound("Fall");
+                    button.getSound();
                     translateTransition1.setToY(600);
                     translateTransition1.setOnFinished(eventPauseScreen -> {
                         try {

@@ -70,8 +70,9 @@ public class Playable_Screen_Controller  {
 
 
     public void switchToPause(ActionEvent event) throws IOException {
-        Sound sound = new Sound();
-        sound.buttonSound();
+        SoundFactory soundFactory = new SoundFactory();
+        Sound button = soundFactory.getSound("Button");
+        button.getSound();
         Parent root_pause = FXMLLoader.load(getClass().getResource("exit_screen.fxml"));
         Stage stage_pause = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene_pause = new Scene(root_pause);

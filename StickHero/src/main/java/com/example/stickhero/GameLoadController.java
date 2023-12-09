@@ -53,8 +53,9 @@ public class GameLoadController {
     
 
     public void switchToPlayScreen(ActionEvent event) throws IOException {
-        Sound sound = new Sound();
-        sound.buttonSound();
+        SoundFactory soundFactory = new SoundFactory();
+        Sound button = soundFactory.getSound("Button");
+        button.getSound();
     	Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
     	playable_Screen_Controller.generate_scene(event);
     }

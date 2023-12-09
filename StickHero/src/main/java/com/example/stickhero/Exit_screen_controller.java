@@ -26,8 +26,9 @@ public class Exit_screen_controller {
 
     public void switchToHome(ActionEvent event) throws IOException
     {
-        Sound sound = new Sound();
-        sound.buttonSound();
+        SoundFactory soundFactory = new SoundFactory();
+        Sound button = soundFactory.getSound("Button");
+        button.getSound();
         resestGlobal.reset();
         root_home = FXMLLoader.load(getClass().getResource("main_screen.fxml"));
         stage_home = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -38,8 +39,9 @@ public class Exit_screen_controller {
     }
     public void switchToPlayable(ActionEvent event) throws IOException
     {
-        Sound sound = new Sound();
-        sound.buttonSound();
+        SoundFactory soundFactory = new SoundFactory();
+        Sound button = soundFactory.getSound("Button");
+        button.getSound();
         resestGlobal.reset();
         Playable_Screen_Controller playable_Screen_Controller = new Playable_Screen_Controller();
         playable_Screen_Controller.generate_scene(event);
@@ -48,8 +50,9 @@ public class Exit_screen_controller {
     public void revive(ActionEvent event) throws IOException
     {
         System.out.println("===========revive================");
-        Sound sound = new Sound();
-        sound.buttonSound();
+        SoundFactory soundFactory = new SoundFactory();
+        Sound button = soundFactory.getSound("Button");
+        button.getSound();
 //        int score = GlobalData.score;
 //        int cherryCount = GlobalData.cherrycount;
 

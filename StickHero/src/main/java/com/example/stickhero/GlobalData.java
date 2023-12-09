@@ -19,7 +19,7 @@ public class GlobalData {
     public static int counter =0;
 
     public static int score = 0;
-    public static int cherrycount = 2;
+    public static int cherrycount = 0;
     public static double stickX =0;
     public static double transitionX=0;
 

@@ -7,6 +7,7 @@ module com.example.stickhero {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires com.almasb.fxgl.all;
+    requires junit;
 
     opens com.example.stickhero to javafx.fxml;
     exports com.example.stickhero;
